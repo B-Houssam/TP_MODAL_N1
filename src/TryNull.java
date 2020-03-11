@@ -22,9 +22,7 @@ public class TryNull {
 			//write to a binary file
 			//s.saveObj(e);
 			//write to XML file
-			s.saveXml(e);
-			
-			
+			s.saveXml(e);			
 		}
 		catch (Exception ee) {
 			System.out.println(ee.toString());

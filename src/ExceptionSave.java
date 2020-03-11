@@ -20,16 +20,18 @@ public class ExceptionSave implements Serializable{
 	String Meth;
 	String Class;
 	Date date;
+	String msg;
 	
 	
 	public ExceptionSave() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ExceptionSave(String p, String c, String m, int l) {
+	public ExceptionSave(String p, String c, String m, int l, String ms) {
 		this.Class = c;
 		this.line = l;
 		this.Meth = m;
+		this.msg = ms;
 		this.pack = p;
 		this.date = new Date();
 	}
@@ -41,12 +43,13 @@ public class ExceptionSave implements Serializable{
 					exp.getStackTrace()[0].getClass().getPackage().getName(),
 					exp.getStackTrace()[0].getClassName(),
 					exp.getStackTrace()[0].getMethodName(),
-					exp.getStackTrace()[0].getLineNumber()
+					exp.getStackTrace()[0].getLineNumber(),
+					exp.getMessage()
 				);
 			File f = new File ("/home/houssam/workspace/projects/Java/Logs/Excpt.txt");
 			BufferedWriter bw = new BufferedWriter(new FileWriter(f,true));
 			bw.newLine();
-			bw.write("Class: " + exS.Class + " Package: " + exS.pack + " Methode: " + exS.Meth + " line: " + exS.line + " AT: " + new Date());
+			bw.write("Class: " + exS.Class + " Package: " + exS.pack + " Methode: " + exS.Meth + " line: " + exS.line + " AT: " + new Date() + " message: " + exS.msg);
 			bw.close();
 		} catch (IOException IOe) {
 			// TODO: handle exception
@@ -65,7 +68,8 @@ public class ExceptionSave implements Serializable{
 					exp.getStackTrace()[0].getClass().getPackage().getName(),
 					exp.getStackTrace()[0].getClassName(),
 					exp.getStackTrace()[0].getMethodName(),
-					exp.getStackTrace()[0].getLineNumber()
+					exp.getStackTrace()[0].getLineNumber(),
+					exp.getMessage()
 				);
 			File f = new File ("/home/houssam/workspace/projects/Java/Logs/Excpb.ser");
 			FileOutputStream fs = new FileOutputStream(f);
@@ -90,7 +94,8 @@ public class ExceptionSave implements Serializable{
 					exp.getStackTrace()[0].getClass().getPackage().getName(),
 					exp.getStackTrace()[0].getClassName(),
 					exp.getStackTrace()[0].getMethodName(),
-					exp.getStackTrace()[0].getLineNumber()
+					exp.getStackTrace()[0].getLineNumber(),
+					exp.getMessage()
 				);
 			
 			File f = new File("/home/houssam/workspace/projects/Java/Logs/ExcpX.xml");
@@ -127,8 +132,14 @@ public class ExceptionSave implements Serializable{
 			bw.newLine();
 			bw.write("</DATEndTIME>");
 			bw.newLine();
+			bw.write("<Message>");
+			bw.newLine();
+			bw.write(exS.msg);
+			bw.newLine();
+			bw.write("</Message>");
+			bw.newLine();
 			bw.write("</Exception>");
-			bw.close();			
+			bw.close();
 		} catch (IOException IOe) {
 			// TODO: handle exception
 			System.out.println("Erreur I/O fichier des Logs/ExcpX: " + IOe.toString());
@@ -152,6 +163,7 @@ public class ExceptionSave implements Serializable{
 			System.out.println(exS.Meth);
 			System.out.println(exS.line);
 			System.out.println(exS.date);
+			System.out.println(exS.msg);
 			ois.close();
 		} catch (IOException IOe) {
 			// TODO: handle exception
